@@ -9,14 +9,14 @@ if class is depend on anther class like `Class A`  is depend on `Class B` that m
 reference of Class B like this image Injection simply means passing dependency from outside class
 the idea
 
-# benefits of Dagger
+# Benefits of Dagger
 
 - Reduce boilerplate code
 - Decoupled build dependencies
 - improving testing | Classify Dependency |:---------------------------:| :
   | ![](images/ic_dependancy.png)
 
-### example how dagger reduce boilerplate code
+### Example how dagger reduce boilerplate code
 
 ```kotlin
    class Care(val engine: Engine, val wheels: Wheels) {
@@ -27,7 +27,7 @@ the idea
 ```
 
 ```kotlin
-   fun mai() {
+   fun main() {
     val blocks = Block()
     val cylinder = Cylinder()
     val engine = Engine(blocks, cylinder)
@@ -36,34 +36,39 @@ the idea
 }
 ```
 
-## using dagger will reduce
+## Using dagger will reduce
 
 ```kotlin
-   fun mai() {
+   fun main() {
     val carComponet = DaggerCarComponent.create()
     val car = carComponet.getCar()
 }
 ```
 
-class car depend on two class engine and wheels let is start how dagger work to provide automated
+Class car depend on two class engine and wheels let is start how dagger work to provide automated
 dependency
 
-`Dependancy ` this provide using annotation `@Inject` you can add it for classes can edit on them
-another way using `@Module` and you can provide object using `@provides`
+`Dependancy ` provide using annotation `@Inject` you can add it for classes can edit on them another
+way using `@Module` and you can provide object using `@Provides`
 ` Creator ` that responsible for create DAG Dependency Ayclic Graph using annotation `@Component`
 
-### example create dependency for object Car according this graph
+### Example create dependency for object Car according this graph
 
 ![](images/dag.png)
 
-## create Dependency
+## Create Dependency
 
-- first create CareComponent as interface this is backbone initialize
-   ```kotlin @Component interface CareComponent { fun getCar():Care }```
-##How dagger work
-- First using injection annotation  `@inject` if you can inject Constructor for this class for example `Car`,`Engine`
-- second using class module and annotation `@Module` above class and add this class to modules for component to know another way provide object check `WhealsModule` 
-   and using `@provides` top the method provide object 
+- First create CareComponent as interface this is backbone initialize DAG
+  ```kotlin @Component interface CareComponent { fun getCar():Care }```
+
+## Two way dagger working to get object for Graph dependency
+
+- Using injection annotation  `@inject` if you can inject Constructor for your classes that mean we
+  can edit at this classes for example `Car`,`Engine`
+- Using class module and annotation `@Module` above class and add this class to modules for
+  component to know another way provide object check `WhealsModule`
+  and using `@provides` top the method provide object
+
 ```kotlin
    @Module
 class WhealsModule {
@@ -72,14 +77,32 @@ class WhealsModule {
     fun provideRimes(): Rimes = Rimes()
 }
 ```
-- we can use `@Binds` with module that provide instance for abstraction class like `PetrolEngineModule`
+
+## Other annotation help us to pro
+
+- We can use `@Binds` with `Module` that provide instance for abstraction class for exammle `PetrolEngine` Implement `Engine` Interface
+  and `Car` class depend on Engine to provide it create as like `PetrolEngineModule`
+```kotlin
+     @Module
+     abstract class PetrolEngineModule {
+     @Binds
+      abstract fun bindPetrolEngine(petrolEngine: PetrolEngine): Engine
+        }
+  ```
+- We can use `@Named` if provide same type object different way and want to determine which one can used at injection if used many at our project 
+  then we can create modifier to avoid mistake write name Correctly using Qualifier like `@Capicty` , `@HorsePower`  
 - we can inject value of object at run time that check file `DiesleEngineModule`
-- another way bind value at runtime create your specfic builder for daggerComponent we will create interface inside
+- We can using `@Singleton` in case of want one object used inside apps 
+- We cane use `@Component.Builder` another way bind value at runtime create your specific builder for daggerComponent we will create interface inside
  ```kotlin
    @Component.Builder
     interface Builder {
-        @BindsInstance
-        fun bindHorseBower(horsePower: Int)   // this value bind any int if object need inject an int value 
-        fun getComponent(): CareComponent
+  @BindsInstance
+  fun bindHorseBower(@HorsePower horsePower: Int): Builder// this value bind any int if object need inject ant value
+
+  @BindsInstance
+  fun bindCapacity(@Capacity capacity: Int): Builder
+
+  fun getComponent(): CareComponent
     }
 ```

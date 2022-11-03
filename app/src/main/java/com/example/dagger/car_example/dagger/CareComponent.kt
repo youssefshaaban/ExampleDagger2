@@ -15,7 +15,10 @@ interface CareComponent {
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun bindHorseBower(horsePower: Int):Builder// this value bind any int if object need inject ant value
+        fun bindHorseBower(@HorsePower horsePower: Int): Builder// this value bind any int if object need inject ant value
+
+        @BindsInstance
+        fun bindCapacity(@Capacity capacity: Int): Builder
 
         fun build(): CareComponent
     }
