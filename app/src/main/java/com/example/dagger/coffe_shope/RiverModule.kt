@@ -1,4 +1,4 @@
-package com.example.dagger
+package com.example.dagger.coffe_shope
 
 import dagger.Module
 import dagger.Provides

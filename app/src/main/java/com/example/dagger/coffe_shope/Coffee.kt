@@ -1,10 +1,10 @@
-package com.example.dagger
+package com.example.dagger.coffe_shope
 
 import android.util.Log
 import javax.inject.Inject
-import javax.inject.Named
+
 @ActivityScope
-class Coffee @Inject constructor(val river: River,@Sugar val sugar:Int,@Milk val milk:Int) {
+class Coffee @Inject constructor(val river: River, @Sugar val sugar:Int, @Milk val milk:Int) {
     private  val TAG = "Coffee"
     @Inject
     lateinit var farm: Farm

@@ -1,16 +1,15 @@
-package com.example.dagger
+package com.example.dagger.coffe_shope
 
+import com.example.dagger.MainActivity
 import dagger.BindsInstance
-import dagger.Component
 import dagger.Subcomponent
-import javax.inject.Singleton
 
 @Subcomponent
 @ActivityScope
 interface CoffeeComponent {
 
     fun getCoffee(): Coffee
-    fun inject(mainActivity: MainActivity)
+  //  fun inject(mainActivity: MainActivity)
 
     @Subcomponent.Builder
     interface Builder {

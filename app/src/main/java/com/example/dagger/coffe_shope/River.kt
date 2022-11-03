@@ -1,4 +1,4 @@
-package com.example.dagger
+package com.example.dagger.coffe_shope
 
 import android.util.Log
 import javax.inject.Inject
