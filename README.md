@@ -106,3 +106,87 @@ class WhealsModule {
   fun getComponent(): CareComponent
     }
 ```
+##Custom Scope 
+If one dependency at component different scope like `Driver` class want to one object per application and one care creation per ActivityScope
+so we create `AppCoponent` and object will be the scope like `Driver` take scope Singleton 
+```kotlin
+  @Singleton
+@Component
+interface AppComponent {
+  fun getDriver(): Driver
+}
+```
+the create scope for activity called `ActivityScope` add it to ActivityComponent and it to provide scope activity like `Car`
+```kotlin
+ @ActivityScope
+@Component(
+  dependencies = [AppComponent::class],
+  modules = [WhealsModule::class, PetrolEngineModule::class]
+)
+interface ActivityComponent {
+
+  fun getCar(): Care
+  fun inject(mainActivity: MainActivity)
+
+  @Component.Builder
+  interface Builder {
+    @BindsInstance
+    fun bindHorseBower(@HorsePower horsePower: Int): Builder// this value bind any int if object need inject ant value
+
+    @BindsInstance
+    fun bindCapacity(@Capacity capacity: Int): Builder
+    fun appComponent(appComponent: AppComponent): Builder
+    fun build(): ActivityComponent
+  }
+}
+```
+according above code you see activity component used dependencies `Appcomponent` to provide object for app scope 
+there is another solution you can use annotation `@SubComponnet` this solution solve problem if another object want to be scope application 
+component that easy add `@Singleton` annotation at provide object but you must be add it AppComponent like `getDriver()` method
+Let you want `DiselEngine` singleton scope app if we not use subcomponent you need add `@Singleton` for provide method
+and new method AppComponent 
+```kotlin
+@Singleton
+@Component(modules = [DieselEngineModule::class])
+interface AppComponent {
+  fun getDriver(): Driver
+  fun getDieselEngine(): Engine
+
+  @Component.Builder
+  interface Builder {
+    @BindsInstance
+    fun bindHorseBower(@HorsePower horsePower: Int): Builder// this value bind any int if object need inject ant value
+
+    fun binDieaselModule(dieselEngineModule: DieselEngineModule):Builder
+
+    fun build():AppComponent
+  }
+}
+```
+Look above code we find add method getDieselEngine method and modules provide `DieselEngineModule` to app component add new builder 
+because need provide bind instance for horse power so DieselEngine need it to provide Object 
+If you want new object at the scope of AppComponent must be add method like 
+```kotlin
+ fun getDriver(): Driver
+  fun getDieselEngine(): Engine
+```
+This problem and Dagger find solution Use sub component so AppComponent like This
+```kotlin
+@Singleton
+@Component(modules = [DieselEngineModule::class])
+interface AppComponent {
+    fun getActivityComponent(): ActivityComponent // get only for subComponent that depend on AppComponent 
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        fun bindHorseBower(@HorsePower horsePower: Int): Builder// this value bind any int if object need inject ant value
+        @BindsInstance
+        fun bindCapacity(@Capacity capacity: Int): Builder// this value bind any int if object need inject ant value
+
+        fun binDieaselModule(dieselEngineModule: DieselEngineModule): Builder
+
+        fun build(): AppComponent
+    }
+}
+```

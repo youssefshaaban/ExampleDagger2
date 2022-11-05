@@ -1,9 +1,11 @@
 package com.example.dagger.car_example.car
 
 import android.util.Log
+import com.example.dagger.car_example.dagger.ActivityScope
 import javax.inject.Inject
 
-class Care @Inject constructor(val wheels: Wheels) {
+@ActivityScope
+class Care @Inject constructor(val driver: Driver,val wheels: Wheels) {
     private  val TAG = "Care"
     @Inject lateinit var  engine: Engine
 
@@ -13,6 +15,6 @@ class Care @Inject constructor(val wheels: Wheels) {
     }
     fun drive() {
         engine.start()
-        Log.d(TAG+"joe", " driving...... ")
+        Log.d(TAG+"joe", "driver $driver is driving...... car $this engin in the car $engine")
     }
 }

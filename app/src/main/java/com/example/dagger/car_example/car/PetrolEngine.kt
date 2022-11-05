@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.dagger.car_example.dagger.Capacity
 import com.example.dagger.car_example.dagger.HorsePower
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class PetrolEngine @Inject constructor(@HorsePower val horsePower:Int, @Capacity val capacity:Int) : Engine {
     companion object {
