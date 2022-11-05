@@ -170,7 +170,7 @@ If you want new object at the scope of AppComponent must be add method like
  fun getDriver(): Driver
   fun getDieselEngine(): Engine
 ```
-This problem and Dagger find solution Use sub component so AppComponent like This
+This problem and Dagger find solution Use subComponent for `ActivityComponent` so AppComponent like This
 ```kotlin
 @Singleton
 @Component(modules = [DieselEngineModule::class])
@@ -190,3 +190,5 @@ interface AppComponent {
     }
 }
 ```
+As above code ParentComponent `AppComponent` that provide Instance child component `ActivityComponent` just provide one method 
+of get child component `ActivityComponent` and this component is subComponent 
