@@ -78,7 +78,7 @@ class WhealsModule {
 }
 ```
 
-## Other annotation help us to pro
+## Other annotation help us to provide injection 
 
 - We can use `@Binds` with `Module` that provide instance for abstraction class for exammle `PetrolEngine` Implement `Engine` Interface
   and `Car` class depend on Engine to provide it create as like `PetrolEngineModule`
