@@ -48,7 +48,7 @@ the idea
 Class car depend on two class engine and wheels let is start how dagger work to provide automated
 dependency
 
-`Dependancy ` provide using annotation `@Inject` you can add it for classes can edit on them another
+`Dependancy ` provide using annotation `@Inject` you can add it for classes can edit on them or another
 way using `@Module` and you can provide object using `@Provides`
 ` Creator ` that responsible for create DAG Dependency Ayclic Graph using annotation `@Component`
 
@@ -80,7 +80,7 @@ class WhealsModule {
 
 ## Other annotation help us to provide injection 
 
-- We can use `@Binds` with `Module` that provide instance for abstraction class for exammle `PetrolEngine` Implement `Engine` Interface
+- We can use `@Binds` with `Module` that provide instance for abstraction class for example `PetrolEngine` Implement `Engine` Interface
   and `Car` class depend on Engine to provide it create as like `PetrolEngineModule`
 ```kotlin
      @Module
@@ -106,7 +106,7 @@ class WhealsModule {
   fun getComponent(): CareComponent
     }
 ```
-##Custom Scope 
+## Custom Scope 
 If one dependency at component different scope like `Driver` class want to one object per application and one care creation per ActivityScope
 so we create `AppCoponent` and object will be the scope like `Driver` take scope Singleton 
 ```kotlin
